@@ -9,5 +9,6 @@ namespace ExchangeRate.Domain.Interface
 {
     public interface ICurrencyRepository
     {
+        Task CreateCurrency(CurrencyInfo currencyInfo);
     }
 }
