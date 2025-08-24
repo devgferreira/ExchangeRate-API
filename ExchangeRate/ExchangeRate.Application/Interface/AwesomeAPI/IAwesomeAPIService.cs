@@ -9,6 +9,6 @@ namespace ExchangeRate.Application.Interface.AwesomeAPI
 {
     public interface IAwesomeAPIService
     {
-        Task<CurrencyDTO> GetLastCurrencyAsync(string coin);
+        Task<CurrencyDTO> GetLastCurrencyAsync(string currency);
     }
 }

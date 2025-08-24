@@ -14,12 +14,12 @@ namespace ExchangeRate.API.Controllers.AwesomeAPI
             _awesomeAPIService = awesomeAPIService;
         }
 
-        [HttpGet("{coin}")]
-        public async Task<IActionResult> GetCurrency(string coin)
+        [HttpGet("{currency}")]
+        public async Task<IActionResult> GetCurrency(string currency)
         {
             try
             {
-                var result  = await _awesomeAPIService.GetCurrencyAsync(coin);
+                var result  = await _awesomeAPIService.GetLastCurrencyAsync(currency);
                 return Ok(result);
             }
             catch (Exception ex)

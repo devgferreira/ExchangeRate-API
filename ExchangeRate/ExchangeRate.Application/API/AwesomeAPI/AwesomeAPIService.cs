@@ -22,11 +22,11 @@ namespace ExchangeRate.Application.API.AwesomeAPI
             _applicationSettings = applicationSettings;
         }
 
-        public async Task<CurrencyDTO> GetLastCurrencyAsync(string coin)
+        public async Task<CurrencyDTO> GetLastCurrencyAsync(string currency)
         {
             var client = _httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.UserAgent.ParseAdd("ExchangeRate.API/1.0");
-            var url = $"{_applicationSettings.URLAwesomeAPI}/last/{coin}-BRL";
+            var url = $"{_applicationSettings.URLAwesomeAPI}/last/{currency}-BRL";
             try
             {
                 var response = await client.GetFromJsonAsync<Dictionary<string, CurrencyDTO>>(url);
