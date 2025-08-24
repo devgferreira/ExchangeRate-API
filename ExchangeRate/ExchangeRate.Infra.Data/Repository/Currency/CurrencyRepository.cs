@@ -1,4 +1,5 @@
-﻿using ExchangeRate.Domain.Entity.Currency;
+﻿using Dapper;
+using ExchangeRate.Domain.Entity.Currency;
 using ExchangeRate.Domain.Interface;
 using ExchangeRate.Infra.Data.Context;
 using System;
@@ -20,7 +21,18 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
 
         public async Task CreateCurrency(CurrencyInfo currencyInfo)
         {
-            throw new NotImplementedException();
+            var sql = @"INSERT INTO Currency
+                        (symbol, bid, ask, date_of_currency, created_at)
+                        VALUES(@Symbol, @Bid, @Ask, @DateOfCurrency, @CreatedAT)";
+
+            await _dbContext.Connection.ExecuteAsync(sql, new
+            {
+                currencyInfo.Symbol,
+                currencyInfo.Bid,
+                currencyInfo.Ask,
+                currencyInfo.DateOfCurrency,
+                currencyInfo.CreatedAT
+            });
         }
     }
 }
