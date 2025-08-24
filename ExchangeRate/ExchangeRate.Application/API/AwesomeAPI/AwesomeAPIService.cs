@@ -1,5 +1,6 @@
 ﻿using ExchangeRate.Application.DTO.Currency;
 using ExchangeRate.Application.Interface.AwesomeAPI;
+using ExchangeRate.Application.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +14,19 @@ namespace ExchangeRate.Application.API.AwesomeAPI
     public class AwesomeAPIService : IAwesomeAPIService
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApplicationSettings _applicationSettings;
 
-        public AwesomeAPIService(IHttpClientFactory httpClientFactory)
+        public AwesomeAPIService(IHttpClientFactory httpClientFactory, IApplicationSettings applicationSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _applicationSettings = applicationSettings;
         }
 
-        public async Task<CurrencyDTO> GetCurrencyAsync(string coin)
+        public async Task<CurrencyDTO> GetLastCurrencyAsync(string coin)
         {
             var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("CambioAPI-ProcessoSeletivo/1.0");
-            var url = $"https://economia.awesomeapi.com.br/json/last/{coin}-BRL";
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("ExchangeRate.API/1.0");
+            var url = $"{_applicationSettings.URLAwesomeAPI}/last/{coin}-BRL";
             try
             {
                 var response = await client.GetFromJsonAsync<Dictionary<string, CurrencyDTO>>(url);
