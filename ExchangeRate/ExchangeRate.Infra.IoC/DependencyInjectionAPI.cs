@@ -1,5 +1,10 @@
 ﻿using ExchangeRate.Application.API.AwesomeAPI;
 using ExchangeRate.Application.Interface.AwesomeAPI;
+using ExchangeRate.Application.Interface.Currency;
+using ExchangeRate.Application.Service;
+using ExchangeRate.Domain.Interface;
+using ExchangeRate.Infra.Data.Context;
+using ExchangeRate.Infra.Data.Repository.Currency;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,8 +20,11 @@ namespace ExchangeRate.Infra.IoC
         public static IServiceCollection AddInfrastructureAPI(this IServiceCollection services,
        IConfiguration configuration)
         {
-            services.AddScoped<IAwesomeAPIService, AwesomeAPIService>();
 
+            services.AddScoped<DbContext>();
+            services.AddScoped<IAwesomeAPIService, AwesomeAPIService>();
+            services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+            services.AddScoped<ICurrencyService, CurrencyService>();
 
             return services;
         }
