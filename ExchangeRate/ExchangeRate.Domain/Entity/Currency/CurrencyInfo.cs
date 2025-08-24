@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExchangeRate.Application.DTO.Currency
+namespace ExchangeRate.Domain.Entity.Currency
 {
-    public class CurrencyDTO
+    public class CurrencyInfo
     {
+        public int Id { get; set; }
         public string Symbol { get; set; }
         public decimal Bid { get; set; }
         public decimal Ask { get; set; }
         public DateTime DateOfCurrency { get; set; }
-        public DateTime CreatedAT { get; set; }
+        public DateTime CreatedAT { get; set; } 
     }
 }

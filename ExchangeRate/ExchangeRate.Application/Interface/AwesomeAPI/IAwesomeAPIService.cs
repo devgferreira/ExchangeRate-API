@@ -1,4 +1,4 @@
-﻿using ExchangeRate.Application.DTO.Currency;
+﻿using ExchangeRate.Application.DTO.AwesomeAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace ExchangeRate.Application.Interface.AwesomeAPI
 {
     public interface IAwesomeAPIService
     {
-        Task<CurrencyDTO> GetLastCurrencyAsync(string currency);
+        Task<AwesomeAPIDTO> GetLastCurrencyAsync(string currency);
     }
 }
