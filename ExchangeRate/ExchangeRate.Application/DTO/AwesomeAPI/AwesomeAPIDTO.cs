@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExchangeRate.Application.DTO.Currency
+namespace ExchangeRate.Application.DTO.AwesomeAPI
 {
-    public class CurrencyDTO
+    public class AwesomeAPIDTO
     {
         public string Code { get; set; }
         public string Codein { get; set; }

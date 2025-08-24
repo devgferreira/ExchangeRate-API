@@ -1,4 +1,5 @@
-﻿using ExchangeRate.Application.DTO.Currency;
+﻿using ExchangeRate.Application.DTO.AwesomeAPI;
+using ExchangeRate.Application.DTO.Currency;
 using ExchangeRate.Application.Interface.AwesomeAPI;
 using ExchangeRate.Application.Settings;
 using System;
@@ -22,14 +23,14 @@ namespace ExchangeRate.Application.API.AwesomeAPI
             _applicationSettings = applicationSettings;
         }
 
-        public async Task<CurrencyDTO> GetLastCurrencyAsync(string currency)
+        public async Task<AwesomeAPIDTO> GetLastCurrencyAsync(string currency)
         {
             var client = _httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.UserAgent.ParseAdd("ExchangeRate.API/1.0");
             var url = $"{_applicationSettings.URLAwesomeAPI}/last/{currency}-BRL";
             try
             {
-                var response = await client.GetFromJsonAsync<Dictionary<string, CurrencyDTO>>(url);
+                var response = await client.GetFromJsonAsync<Dictionary<string, AwesomeAPIDTO>>(url);
                 if (response == null || response.Count == 0)
                     throw new Exception("Cotação não encontrada.");
 
