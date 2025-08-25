@@ -19,13 +19,14 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
             _dbContext = dbContext;
         }
 
-        public async Task CreateCurrency(CurrencyInfo currencyInfo)
+        public async Task<bool> CreateCurrency(CurrencyInfo currencyInfo)
         {
             var sql = @"INSERT INTO Currency
-                        (symbol, bid, ask, date_of_currency, created_at)
-                        VALUES(@Symbol, @Bid, @Ask, @DateOfCurrency, @CreatedAT)";
+                        (symbol, bid, ask, DateOfCurrency, CreatedAT)
+                        VALUES(@Symbol, @Bid, @Ask, @DateOfCurrency, @CreatedAT)
+                        ON CONFLICT (DateOfCurrency) DO NOTHING;";
 
-            await _dbContext.Connection.ExecuteAsync(sql, new
+            var rowsAffected = await _dbContext.Connection.ExecuteAsync(sql, new
             {
                 currencyInfo.Symbol,
                 currencyInfo.Bid,
@@ -33,6 +34,8 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
                 currencyInfo.DateOfCurrency,
                 currencyInfo.CreatedAT
             });
+
+            return rowsAffected > 0;
         }
     }
 }
