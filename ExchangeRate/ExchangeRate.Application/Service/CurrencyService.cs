@@ -22,10 +22,10 @@ namespace ExchangeRate.Application.Service
             _logger = logger;
         }
 
-        public async Task CreateCurrency(CurrencyDTO currencyCreateDTO)
+        public async Task<bool> CreateCurrency(CurrencyDTO currencyCreateDTO)
         {
             _logger.LogInformation("Starting the creation of the currency.");
-            await _currencyRepository.CreateCurrency(new CurrencyInfo
+            var reuslt = await _currencyRepository.CreateCurrency(new CurrencyInfo
             {
                 Symbol = currencyCreateDTO.Symbol,
                 Bid = currencyCreateDTO.Bid,
@@ -34,7 +34,14 @@ namespace ExchangeRate.Application.Service
                 CreatedAT = currencyCreateDTO.CreatedAT
 
             });
+            if (!reuslt)
+            {
+                _logger.LogWarning("Currency already exists.");
+                return reuslt;
+            }
             _logger.LogInformation("Currency created successfully.");
+
+            return reuslt;
 
         }
     }
