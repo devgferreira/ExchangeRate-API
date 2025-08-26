@@ -23,7 +23,7 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
         public async Task<bool> CreateCurrency(CurrencyInfo currencyInfo)
         {
             var sql = @"INSERT INTO Currency
-                        (code, codein, bid, ask, DateOfCurrency, CreatedAT)
+                        (UPPER(code), UPPER(codein), bid, ask, DateOfCurrency, CreatedAT)
                         VALUES(@Code, @Codein, @Bid, @Ask, @DateOfCurrency, @CreatedAT)
                         ON CONFLICT (DateOfCurrency) DO NOTHING;";
 
@@ -46,11 +46,11 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
 
             if(!string.IsNullOrEmpty(request.Code))
             {
-                sql += " AND code = @Code";
+                sql += " AND UPPER(code) = UPPER(@Code)";
             }
             if (!string.IsNullOrEmpty(request.CodeIn))
             {
-                sql += " AND codein = @CodeIn";
+                sql += " AND UPPER(codein) = UPPER(@CodeIn)";
             }
             if (request.DateOfCurrency != null)
             {
@@ -64,8 +64,6 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
                 request.DateOfCurrency
             });
             return result.ToList();
-
-
         }
     }
 }
