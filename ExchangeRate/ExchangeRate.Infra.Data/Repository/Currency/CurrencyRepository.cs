@@ -54,7 +54,7 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
             }
             if (!string.IsNullOrEmpty(request.DateOfCurrency))
             {
-                sql += " AND dateofcurrency = @DateOfCurrency";
+                sql += " AND dateofcurrency LIKE @DateOfCurrency + '%' ";
             }
 
             var result = await _dbContext.Connection.QueryAsync<CurrencyInfo>(sql, new

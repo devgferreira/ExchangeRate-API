@@ -1,6 +1,7 @@
 ﻿using ExchangeRate.Application.DTO.Currency;
 using ExchangeRate.Application.Interface.Currency;
 using ExchangeRate.Domain.Entity.Currency;
+using ExchangeRate.Domain.Entity.Currency.Request;
 using ExchangeRate.Domain.Interface;
 using Microsoft.Extensions.Logging;
 using System;
@@ -46,9 +47,26 @@ namespace ExchangeRate.Application.Service
 
         }
 
-        public Task<CurrencyPriceBidVariationDTO> CurrencyCalculatePriceBidVariation(CurrencyDTO currencyCreateDTO)
+        public async Task<CurrencyPriceBidVariationDTO> CurrencyCalculatePriceBidVariationOnTheDay(CurrencyRequest request)
         {
-            throw new NotImplementedException();
+            request.DateOfCurrency = DateTime.Now.ToString("yyyy-MM-dd");
+            var currency = await _currencyRepository.SelectCurrency(request);
+
+            var ordered = currency.OrderBy(c => DateTime.Parse(c.DateOfCurrency)).ToList();
+
+            decimal firtsCurrency = ordered.First().Bid;
+            decimal lastCurrency = ordered.Last().Bid;
+
+            decimal variacaoPercentual = ((lastCurrency - firtsCurrency) / firtsCurrency) * 100;
+            decimal variacaoPrice = lastCurrency - firtsCurrency;
+
+            return new CurrencyPriceBidVariationDTO
+            {
+                FirstBidPrice = firtsCurrency,
+                LastBidPrice = lastCurrency,
+                VariationPercentage = variacaoPercentual,
+                VariationPrice = variacaoPrice
+            };
         }
     }
 }
