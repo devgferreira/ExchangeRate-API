@@ -49,23 +49,22 @@ namespace ExchangeRate.Application.Service
 
         public async Task<CurrencyPriceBidVariationDTO> CurrencyCalculatePriceBidVariationOnTheDay(CurrencyRequest request)
         {
-            request.DateOfCurrency = DateTime.Now.ToString("yyyy-MM-dd");
+            request.DateOfCurrency = DateTime.Now.Date;
             var currency = await _currencyRepository.SelectCurrency(request);
 
-            var ordered = currency.OrderBy(c => DateTime.Parse(c.DateOfCurrency)).ToList();
+            var ordered = currency.OrderBy(c => c.DateOfCurrency).ToList();
 
-            decimal firtsCurrency = ordered.First().Bid;
-            decimal lastCurrency = ordered.Last().Bid;
+            decimal firstCurrency = Math.Round(ordered.First().Bid, 4);
+            decimal lastCurrency = Math.Round(ordered.Last().Bid, 4);
 
-            decimal variacaoPercentual = ((lastCurrency - firtsCurrency) / firtsCurrency) * 100;
-            decimal variacaoPrice = lastCurrency - firtsCurrency;
-
+            decimal variationPrice = Math.Round(lastCurrency - firstCurrency, 4);
+            decimal variationPercentage = Math.Round(((lastCurrency - firstCurrency) / firstCurrency) * 100, 4);
             return new CurrencyPriceBidVariationDTO
             {
-                FirstBidPrice = firtsCurrency,
+                FirstBidPrice = firstCurrency,
                 LastBidPrice = lastCurrency,
-                VariationPercentage = variacaoPercentual,
-                VariationPrice = variacaoPrice
+                VariationPercentage = variationPercentage,
+                VariationPrice = variationPrice
             };
         }
     }

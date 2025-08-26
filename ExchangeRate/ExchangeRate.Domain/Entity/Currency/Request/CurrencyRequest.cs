@@ -10,7 +10,7 @@ namespace ExchangeRate.Domain.Entity.Currency.Request
     {
         public string? Code { get; set; }
         public string? CodeIn { get; set; }
-        public string DateOfCurrency { get; set; }
+        public DateTime? DateOfCurrency { get; set; }
 
     }
 }

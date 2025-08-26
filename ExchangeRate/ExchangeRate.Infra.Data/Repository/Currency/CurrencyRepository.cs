@@ -24,7 +24,7 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
         {
             var sql = @"INSERT INTO Currency
                         (code, codein, bid, ask, DateOfCurrency, CreatedAT)
-                        VALUES(@Symbol, @Bid, @Ask, @DateOfCurrency, @CreatedAT)
+                        VALUES(@Code, @Codein, @Bid, @Ask, @DateOfCurrency, @CreatedAT)
                         ON CONFLICT (DateOfCurrency) DO NOTHING;";
 
             var rowsAffected = await _dbContext.Connection.ExecuteAsync(sql, new
@@ -52,9 +52,9 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
             {
                 sql += " AND codein = @CodeIn";
             }
-            if (!string.IsNullOrEmpty(request.DateOfCurrency))
+            if (request.DateOfCurrency != null)
             {
-                sql += " AND dateofcurrency LIKE @DateOfCurrency + '%' ";
+                sql += " AND dateofcurrency::date = @DateOfCurrency";
             }
 
             var result = await _dbContext.Connection.QueryAsync<CurrencyInfo>(sql, new

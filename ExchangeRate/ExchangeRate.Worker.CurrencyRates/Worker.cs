@@ -38,7 +38,7 @@ namespace ExchangeRate.Worker.CurrencyRates
                         Codein = result.Codein,
                         Bid = result.Bid,
                         Ask = result.Ask,
-                        DateOfCurrency = result.Create_date.ToString(),
+                        DateOfCurrency = DateTime.Parse(result.Create_date),
                         CreatedAT = DateTime.UtcNow
                     });
                     _logger.LogInformation($"Finalizing the process: {DateTime.Now}");
