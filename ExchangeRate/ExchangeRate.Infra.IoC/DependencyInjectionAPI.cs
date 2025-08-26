@@ -1,7 +1,9 @@
-﻿using ExchangeRate.Application.API.AwesomeAPI;
+﻿using DotNetEnv;
+using ExchangeRate.Application.API.AwesomeAPI;
 using ExchangeRate.Application.Interface.AwesomeAPI;
 using ExchangeRate.Application.Interface.Currency;
 using ExchangeRate.Application.Service;
+using ExchangeRate.Application.Settings;
 using ExchangeRate.Domain.Interface;
 using ExchangeRate.Infra.Data.Context;
 using ExchangeRate.Infra.Data.Repository.Currency;
@@ -21,10 +23,23 @@ namespace ExchangeRate.Infra.IoC
        IConfiguration configuration)
         {
 
+            Env.Load();
+
+         
+            services.AddHttpClient();
             services.AddScoped<DbContext>();
             services.AddScoped<IAwesomeAPIService, AwesomeAPIService>();
             services.AddScoped<ICurrencyRepository, CurrencyRepository>();
             services.AddScoped<ICurrencyService, CurrencyService>();
+            services.AddScoped<IApplicationSettings, ApplicationSettings>();
+            var appSettings = new ApplicationSettings
+            {
+                URLAwesomeAPI = Environment.GetEnvironmentVariable("URL_AWESOME_API")!,
+                ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")!
+
+            };
+
+            services.AddSingleton<IApplicationSettings>(appSettings);
 
             return services;
         }

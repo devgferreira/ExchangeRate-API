@@ -6,21 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-Env.Load();
 builder.Services.AddControllers();
 builder.Services.AddInfrastructureAPI(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHttpClient();
-
-var appSettings = new ApplicationSettings
-{
-    URLAwesomeAPI = Environment.GetEnvironmentVariable("URL_AWESOME_API")!
-};
-
-builder.Services.AddSingleton<IApplicationSettings>(appSettings);
-
 
 var app = builder.Build();
 

@@ -15,8 +15,8 @@ namespace ExchangeRate.Application.DTO.AwesomeAPI
         public string Low { get; set; }
         public string VarBid { get; set; }
         public string PctChange { get; set; }
-        public string Bid { get; set; }
-        public string Ask { get; set; }
+        public decimal Bid { get; set; }
+        public decimal Ask { get; set; }
         public string Timestamp { get; set; }
         public string Create_date { get; set; }
     }

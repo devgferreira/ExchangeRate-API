@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-ExchangeRate.Worker.CurrencyRates-18b9760e-d550-46cc-93aa-09dc2d4e914c</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExchangeRate.Application\ExchangeRate.Application.csproj" />
+    <ProjectReference Include="..\ExchangeRate.Infra.IoC\ExchangeRate.Infra.IoC.csproj" />
+  </ItemGroup>
+</Project>

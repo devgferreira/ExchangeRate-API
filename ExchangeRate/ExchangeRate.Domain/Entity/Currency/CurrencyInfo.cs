@@ -12,7 +12,7 @@ namespace ExchangeRate.Domain.Entity.Currency
         public string Symbol { get; set; }
         public decimal Bid { get; set; }
         public decimal Ask { get; set; }
-        public DateTime DateOfCurrency { get; set; }
+        public string DateOfCurrency { get; set; }
         public DateTime CreatedAT { get; set; } 
     }
 }
