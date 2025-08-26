@@ -23,8 +23,8 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
         public async Task<bool> CreateCurrency(CurrencyInfo currencyInfo)
         {
             var sql = @"INSERT INTO Currency
-                        (UPPER(code), UPPER(codein), bid, ask, DateOfCurrency, CreatedAT)
-                        VALUES(@Code, @Codein, @Bid, @Ask, @DateOfCurrency, @CreatedAT)
+                        (code, codein, bid, ask, DateOfCurrency, CreatedAT)
+                        VALUES(UPPER(@Code), UPPER(@Codein), @Bid, @Ask, @DateOfCurrency, @CreatedAT)
                         ON CONFLICT (DateOfCurrency) DO NOTHING;";
 
             var rowsAffected = await _dbContext.Connection.ExecuteAsync(sql, new
