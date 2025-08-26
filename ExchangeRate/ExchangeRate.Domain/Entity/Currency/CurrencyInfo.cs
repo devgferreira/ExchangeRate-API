@@ -9,7 +9,8 @@ namespace ExchangeRate.Domain.Entity.Currency
     public class CurrencyInfo
     {
         public int Id { get; set; }
-        public string Symbol { get; set; }
+        public string Code { get; set; }
+        public string Codein { get; set; }
         public decimal Bid { get; set; }
         public decimal Ask { get; set; }
         public string DateOfCurrency { get; set; }

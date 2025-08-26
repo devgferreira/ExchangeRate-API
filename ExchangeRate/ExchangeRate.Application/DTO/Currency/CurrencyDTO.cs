@@ -8,7 +8,8 @@ namespace ExchangeRate.Application.DTO.Currency
 {
     public class CurrencyDTO
     {
-        public string Symbol { get; set; }
+        public string Code { get; set; }
+        public string Codein { get; set; }
         public decimal Bid { get; set; }
         public decimal Ask { get; set; }
         public string DateOfCurrency { get; set; }
