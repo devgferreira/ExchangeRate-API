@@ -1,4 +1,5 @@
-﻿using ExchangeRate.Application.Interface.Currency;
+﻿using ExchangeRate.Application.DTO.Currency.Request;
+using ExchangeRate.Application.Interface.Currency;
 using ExchangeRate.Domain.Entity.Currency.Request;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace ExchangeRate.API.Controllers.Currency
             _currencyService = currencyService;
         }
         [HttpGet("CalculatePriceBidVariationOnTheDay")]
-        public async Task<IActionResult> CurrencyCalculatePriceBidVariationOnTheDay([FromQuery]CurrencyRequest request)
+        public async Task<IActionResult> CurrencyCalculatePriceBidVariationOnTheDay([FromQuery] CurrencyRequest request)
         {
             try
             {
@@ -27,6 +28,21 @@ namespace ExchangeRate.API.Controllers.Currency
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet("CurrencyCalculateAverageSpreadOnTheDay")]
+        public async Task<IActionResult> CurrencyCalculateAverageSpreadOnTheDay([FromQuery] CurrencyRequestDTO request)
+        {
+            try
+            {
+                var result = await _currencyService.CurrencyCalculateAverageSpreadOnTheDay(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }
