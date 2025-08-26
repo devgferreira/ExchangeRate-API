@@ -1,4 +1,5 @@
 ﻿using ExchangeRate.Application.DTO.Currency;
+using ExchangeRate.Application.DTO.Currency.Request;
 using ExchangeRate.Application.Interface.Currency;
 using ExchangeRate.Domain.Entity.Currency;
 using ExchangeRate.Domain.Entity.Currency.Request;
@@ -45,6 +46,21 @@ namespace ExchangeRate.Application.Service
 
             return reuslt;
 
+        }
+
+        public async Task<CurrencyCalculateAverageSpreadDTO> CurrencyCalculateAverageSpreadOnTheDay(CurrencyRequestDTO request)
+        {
+            var currency = await _currencyRepository.SelectCurrency(new CurrencyRequest
+            {
+                Code = request.Code,
+                CodeIn = request.CodeIn,
+                DateOfCurrency = DateTime.Now.Date
+            });
+
+            return new CurrencyCalculateAverageSpreadDTO
+            {
+                AverageSpread = Math.Round(currency.Average(c => c.Ask - c.Bid), 4)
+            };
         }
 
         public async Task<CurrencyPriceBidVariationDTO> CurrencyCalculatePriceBidVariationOnTheDay(CurrencyRequest request)
