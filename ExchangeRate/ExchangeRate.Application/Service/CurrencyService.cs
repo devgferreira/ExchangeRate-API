@@ -1,6 +1,7 @@
 ﻿using ExchangeRate.Application.DTO.Currency;
 using ExchangeRate.Application.Interface.Currency;
 using ExchangeRate.Domain.Entity.Currency;
+using ExchangeRate.Domain.Entity.Currency.Request;
 using ExchangeRate.Domain.Interface;
 using Microsoft.Extensions.Logging;
 using System;
@@ -27,7 +28,8 @@ namespace ExchangeRate.Application.Service
             _logger.LogInformation("Starting the creation of the currency.");
             var reuslt = await _currencyRepository.CreateCurrency(new CurrencyInfo
             {
-                Symbol = currencyCreateDTO.Symbol,
+                Code  = currencyCreateDTO.Code,
+                Codein = currencyCreateDTO.Codein,
                 Bid = currencyCreateDTO.Bid,
                 Ask = currencyCreateDTO.Ask,
                 DateOfCurrency = currencyCreateDTO.DateOfCurrency,
@@ -43,6 +45,27 @@ namespace ExchangeRate.Application.Service
 
             return reuslt;
 
+        }
+
+        public async Task<CurrencyPriceBidVariationDTO> CurrencyCalculatePriceBidVariationOnTheDay(CurrencyRequest request)
+        {
+            request.DateOfCurrency = DateTime.Now.Date;
+            var currency = await _currencyRepository.SelectCurrency(request);
+
+            var ordered = currency.OrderBy(c => c.DateOfCurrency).ToList();
+
+            decimal firstCurrency = Math.Round(ordered.First().Bid, 4);
+            decimal lastCurrency = Math.Round(ordered.Last().Bid, 4);
+
+            decimal variationPrice = Math.Round(lastCurrency - firstCurrency, 4);
+            decimal variationPercentage = Math.Round(((lastCurrency - firstCurrency) / firstCurrency) * 100, 4);
+            return new CurrencyPriceBidVariationDTO
+            {
+                FirstBidPrice = firstCurrency,
+                LastBidPrice = lastCurrency,
+                VariationPercentage = variationPercentage,
+                VariationPrice = variationPrice
+            };
         }
     }
 }

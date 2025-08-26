@@ -1,4 +1,5 @@
 ﻿using ExchangeRate.Application.DTO.Currency;
+using ExchangeRate.Domain.Entity.Currency.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace ExchangeRate.Application.Interface.Currency
     public interface ICurrencyService
     {
         Task<bool> CreateCurrency(CurrencyDTO currencyCreateDTO);
+        Task<CurrencyPriceBidVariationDTO> CurrencyCalculatePriceBidVariationOnTheDay(CurrencyRequest request);
     }
 }
