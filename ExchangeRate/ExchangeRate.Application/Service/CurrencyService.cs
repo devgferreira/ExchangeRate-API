@@ -1,5 +1,6 @@
 ﻿using ExchangeRate.Application.DTO.Currency;
 using ExchangeRate.Application.DTO.Currency.Request;
+using ExchangeRate.Application.DTO.Response;
 using ExchangeRate.Application.Interface.Currency;
 using ExchangeRate.Domain.Entity.Currency;
 using ExchangeRate.Domain.Entity.Currency.Request;
@@ -48,7 +49,7 @@ namespace ExchangeRate.Application.Service
 
         }
 
-        public async Task<CurrencyCalculateAverageSpreadDTO> CurrencyCalculateAverageSpreadOnTheDay(CurrencyRequestDTO request)
+        public async Task<ApiResponse> CurrencyCalculateAverageSpreadOnTheDay(CurrencyRequestDTO request)
         {
             var currency = await _currencyRepository.SelectCurrency(new CurrencyRequest
             {
@@ -57,13 +58,18 @@ namespace ExchangeRate.Application.Service
                 DateOfCurrency = DateTime.Now.Date
             });
 
-            return new CurrencyCalculateAverageSpreadDTO
+            return new ApiResponse
             {
-                AverageSpread = Math.Round(currency.Average(c => c.Ask - c.Bid), 4)
+                Data = new CurrencyCalculateAverageSpreadDTO
+                {
+                    AverageSpread = currency.Any() ? Math.Round(currency.Average(c => c.Ask - c.Bid), 4) : 0
+                },
+                Message = "Success",
+                Success = true
             };
         }
 
-        public async Task<CurrencyPriceBidVariationDTO> CurrencyCalculatePriceBidVariationOnTheDay(CurrencyRequest request)
+        public async Task<ApiResponse> CurrencyCalculatePriceBidVariationOnTheDay(CurrencyRequest request)
         {
             request.DateOfCurrency = DateTime.Now.Date;
             var currency = await _currencyRepository.SelectCurrency(request);
@@ -75,12 +81,17 @@ namespace ExchangeRate.Application.Service
 
             decimal variationPrice = Math.Round(lastCurrency - firstCurrency, 4);
             decimal variationPercentage = Math.Round(((lastCurrency - firstCurrency) / firstCurrency) * 100, 4);
-            return new CurrencyPriceBidVariationDTO
+            return new ApiResponse
             {
-                FirstBidPrice = firstCurrency,
-                LastBidPrice = lastCurrency,
-                VariationPercentage = variationPercentage,
-                VariationPrice = variationPrice
+                Data = new CurrencyPriceBidVariationDTO
+                {
+                    FirstBidPrice = firstCurrency,
+                    LastBidPrice = lastCurrency,
+                    VariationPrice = variationPrice,
+                    VariationPercentage = variationPercentage
+                },
+                Message = "Success",
+                Success = true
             };
         }
     }
