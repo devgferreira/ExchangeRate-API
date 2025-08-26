@@ -17,11 +17,14 @@ namespace ExchangeRate.Worker.CurrencyRates
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _logger.LogInformation($"Starting the worker CurrencyUSD: {DateTime.Now}");
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
-                    _logger.LogInformation($"Iniciando o processo. {DateTime.Now}");
+                    _logger.LogInformation($"Starting the process: {DateTime.Now}");
+
                     using var scope = _scopeFactory.CreateScope();
 
                     var awesomeAPIService = scope.ServiceProvider.GetRequiredService<IAwesomeAPIService>();
@@ -37,7 +40,7 @@ namespace ExchangeRate.Worker.CurrencyRates
                         DateOfCurrency = result.Create_date.ToString(),
                         CreatedAT = DateTime.UtcNow
                     });
-                    _logger.LogInformation($"Woker finalizado {DateTime.Now}");
+                    _logger.LogInformation($"Finalizing the process: {DateTime.Now}");
                 }
                 catch (Exception ex)
                 {
@@ -46,6 +49,8 @@ namespace ExchangeRate.Worker.CurrencyRates
 
                 await Task.Delay(TimeSpan.FromSeconds(63), stoppingToken);
             }
+            _logger.LogInformation($"Finishing the worker CurrencyUSD: {DateTime.Now}");
+
         }
     }
 }
