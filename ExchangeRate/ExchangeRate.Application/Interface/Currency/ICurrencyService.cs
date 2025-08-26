@@ -10,5 +10,7 @@ namespace ExchangeRate.Application.Interface.Currency
     public interface ICurrencyService
     {
         Task<bool> CreateCurrency(CurrencyDTO currencyCreateDTO);
+        Task<CurrencyPriceBidVariationDTO> CurrencyCalculatePriceBidVariation(CurrencyDTO currencyCreateDTO);
+
     }
 }

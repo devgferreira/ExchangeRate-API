@@ -27,7 +27,8 @@ namespace ExchangeRate.Application.Service
             _logger.LogInformation("Starting the creation of the currency.");
             var reuslt = await _currencyRepository.CreateCurrency(new CurrencyInfo
             {
-                Symbol = currencyCreateDTO.Symbol,
+                Code  = currencyCreateDTO.Code,
+                Codein = currencyCreateDTO.Codein,
                 Bid = currencyCreateDTO.Bid,
                 Ask = currencyCreateDTO.Ask,
                 DateOfCurrency = currencyCreateDTO.DateOfCurrency,
@@ -43,6 +44,11 @@ namespace ExchangeRate.Application.Service
 
             return reuslt;
 
+        }
+
+        public Task<CurrencyPriceBidVariationDTO> CurrencyCalculatePriceBidVariation(CurrencyDTO currencyCreateDTO)
+        {
+            throw new NotImplementedException();
         }
     }
 }

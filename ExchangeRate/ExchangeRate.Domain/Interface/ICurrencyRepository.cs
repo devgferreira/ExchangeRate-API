@@ -1,4 +1,5 @@
 ﻿using ExchangeRate.Domain.Entity.Currency;
+using ExchangeRate.Domain.Entity.Currency.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace ExchangeRate.Domain.Interface
     public interface ICurrencyRepository
     {
         Task<bool> CreateCurrency(CurrencyInfo currencyInfo);
+        Task<List<CurrencyInfo>> SelectCurrency(CurrencyRequest request);
     }
 }

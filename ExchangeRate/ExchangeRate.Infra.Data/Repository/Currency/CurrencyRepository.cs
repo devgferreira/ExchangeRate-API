@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using ExchangeRate.Domain.Entity.Currency;
+using ExchangeRate.Domain.Entity.Currency.Request;
 using ExchangeRate.Domain.Interface;
 using ExchangeRate.Infra.Data.Context;
 using System;
@@ -22,13 +23,14 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
         public async Task<bool> CreateCurrency(CurrencyInfo currencyInfo)
         {
             var sql = @"INSERT INTO Currency
-                        (symbol, bid, ask, DateOfCurrency, CreatedAT)
+                        (code, codein, bid, ask, DateOfCurrency, CreatedAT)
                         VALUES(@Symbol, @Bid, @Ask, @DateOfCurrency, @CreatedAT)
                         ON CONFLICT (DateOfCurrency) DO NOTHING;";
 
             var rowsAffected = await _dbContext.Connection.ExecuteAsync(sql, new
             {
-                currencyInfo.Symbol,
+                currencyInfo.Code,
+                currencyInfo.Codein,
                 currencyInfo.Bid,
                 currencyInfo.Ask,
                 currencyInfo.DateOfCurrency,
@@ -36,6 +38,34 @@ namespace ExchangeRate.Infra.Data.Repository.Currency
             });
 
             return rowsAffected > 0;
+        }
+
+        public async Task<List<CurrencyInfo>> SelectCurrency(CurrencyRequest request)
+        {
+            var sql = "SELECT code, codein, bid, ask, dateofcurrency, createdat FROM Currency WHERE 1 = 1 ";
+
+            if(!string.IsNullOrEmpty(request.Code))
+            {
+                sql += " AND code = @Code";
+            }
+            if (!string.IsNullOrEmpty(request.CodeIn))
+            {
+                sql += " AND codein = @CodeIn";
+            }
+            if (!string.IsNullOrEmpty(request.DateOfCurrency))
+            {
+                sql += " AND dateofcurrency = @DateOfCurrency";
+            }
+
+            var result = await _dbContext.Connection.QueryAsync<CurrencyInfo>(sql, new
+            {
+                request.Code,
+                request.CodeIn,
+                request.DateOfCurrency
+            });
+            return result.ToList();
+
+
         }
     }
 }
