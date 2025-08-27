@@ -45,13 +45,12 @@ namespace ExchangeRate.Application.Service.Authenticate
             return true;
         }
 
-        public string GenerateToken(string name, string email, string role)
+        public string GenerateToken(string name, string email)
         {
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, name),
                 new Claim(ClaimTypes.Email, email),
-                new Claim(ClaimTypes.Role, role),
 
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };

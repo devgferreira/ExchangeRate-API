@@ -1,5 +1,6 @@
 ﻿using ExchangeRate.Application.DTO.Token;
 using ExchangeRate.Application.DTO.User;
+using ExchangeRate.Application.Interface.Authenticate;
 using ExchangeRate.Application.Interface.User;
 using ExchangeRate.Domain.Entity.User;
 using ExchangeRate.Domain.Entity.User.Request;
@@ -18,10 +19,12 @@ namespace ExchangeRate.Application.Service.User
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAuthenticateService _authenticateService;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IAuthenticateService authenticateService)
         {
             _userRepository = userRepository;
+            _authenticateService = authenticateService;
         }
 
         public async Task CreateUser(UserDTO userDTO)
@@ -42,12 +45,41 @@ namespace ExchangeRate.Application.Service.User
             });
         }
 
-        public Task<TokenDTO> Login(UserLoginDTO userLoginDTO)
+        public async Task<TokenDTO> Login(UserLoginDTO userLoginDTO)
         {
-            throw new NotImplementedException();
+            var userValidate = await ValidateUserLogin(userLoginDTO);
+            var token = _authenticateService.GenerateToken(userValidate.Name, userValidate.Email);
+            return new TokenDTO
+            {
+                AccessToken = token,
+            };
         }
 
         #region Validations
+
+        private async Task<UserInfo> ValidateUserLogin(UserLoginDTO userLoginDTo)
+        {
+            ValidateLoginFields(userLoginDTo);
+
+            var user = await ValidateUserNotFound(userLoginDTo.Email);
+
+            var isAuthenticated = await _authenticateService.AutheticateAsync(user.Email, userLoginDTo.Password);
+
+            if (!isAuthenticated)
+            {
+                throw new Exception("Please, fill in all fields.");
+            }
+
+            return user;
+        }
+        private void ValidateLoginFields(UserLoginDTO userLoginDTo)
+        {
+            if (string.IsNullOrWhiteSpace(userLoginDTo.Email) || string.IsNullOrWhiteSpace(userLoginDTo.Password))
+            {
+                throw new Exception("Please, fill in all fields.");
+
+            }
+        }
         private async Task ValidateUserRegister(UserDTO userDTo)
         {
             ValidateRegisterFields(userDTo);
@@ -81,6 +113,15 @@ namespace ExchangeRate.Application.Service.User
             {
                 throw new Exception("Please, fill in all fields.");
             }
+        }
+        private async Task<UserInfo> ValidateUserNotFound(string email)
+        {
+            var user = await _userRepository.SelectUser(new UserRequest { Email = email });
+            if (!user.Any())
+            {
+                throw new Exception("User not found.");
+            }
+            return user.FirstOrDefault();
         }
         private bool IsPasswordStrong(string password)
         {
