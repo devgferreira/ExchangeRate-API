@@ -4,7 +4,7 @@ using ExchangeRate.Application.DTO.Response;
 using ExchangeRate.Application.Interface.Currency;
 using ExchangeRate.Domain.Entity.Currency;
 using ExchangeRate.Domain.Entity.Currency.Request;
-using ExchangeRate.Domain.Interface;
+using ExchangeRate.Domain.Interface.Currency;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExchangeRate.Application.Service
+namespace ExchangeRate.Application.Service.Currency
 {
     public class CurrencyService : ICurrencyService
     {
@@ -80,7 +80,7 @@ namespace ExchangeRate.Application.Service
             decimal lastCurrency = Math.Round(ordered.Last().Bid, 4);
 
             decimal variationPrice = Math.Round(lastCurrency - firstCurrency, 4);
-            decimal variationPercentage = Math.Round(((lastCurrency - firstCurrency) / firstCurrency) * 100, 4);
+            decimal variationPercentage = Math.Round((lastCurrency - firstCurrency) / firstCurrency * 100, 4);
             return new ApiResponse
             {
                 Data = new CurrencyPriceBidVariationDTO
