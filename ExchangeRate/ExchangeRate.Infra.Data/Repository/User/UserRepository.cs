@@ -23,8 +23,8 @@ namespace ExchangeRate.Infra.Data.Repository.User
         public async Task CreateUser(UserInfo userInfo)
         {
             var sql = @"INSERT INTO Users
-                        (name, email, passwordHash, passwordSalt, role, createdAt)
-                        VALUES(@Name, UPPER(@Email), @PasswordHash, @PasswordSalt, @Role, @CreatedAt)";
+                        (name, email, passwordHash, passwordSalt, createdAt)
+                        VALUES(@Name, UPPER(@Email), @PasswordHash, @PasswordSalt, @CreatedAt)";
             await _dbContext.Connection.ExecuteAsync(sql, new
             {
                 userInfo.Name,
@@ -38,7 +38,7 @@ namespace ExchangeRate.Infra.Data.Repository.User
 
         public async Task<List<UserInfo>> SelectUser(UserRequest request)
         {
-            var sql = "SELECT id, name, email, passwordHash, passwordSalt, role, createdAt FROM Users WHERE 1 = 1 ";
+            var sql = "SELECT id, name, email, passwordHash, passwordSalt, createdAt FROM Users WHERE 1 = 1 ";
             if (!string.IsNullOrEmpty(request.Email))
             {
                 sql += " AND UPPER(email) = UPPER(@Email)";
