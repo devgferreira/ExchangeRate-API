@@ -2,11 +2,6 @@
 using ExchangeRate.Application.DTO.Currency.Request;
 using ExchangeRate.Application.DTO.Response;
 using ExchangeRate.Domain.Entity.Currency.Request;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExchangeRate.Application.Interface.Currency
 {

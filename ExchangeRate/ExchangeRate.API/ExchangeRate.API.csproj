@@ -16,8 +16,4 @@
     <ProjectReference Include="..\ExchangeRate.Infra.IoC\ExchangeRate.Infra.IoC.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Middleware\" />
-  </ItemGroup>
-
 </Project>

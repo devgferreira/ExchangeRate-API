@@ -6,13 +6,9 @@ using ExchangeRate.Domain.Entity.User;
 using ExchangeRate.Domain.Entity.User.Request;
 using ExchangeRate.Domain.Interface.User;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ExchangeRate.Application.Service.User
 {
