@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExchangeRate.Domain.Interface
+namespace ExchangeRate.Domain.Interface.Currency
 {
     public interface ICurrencyRepository
     {

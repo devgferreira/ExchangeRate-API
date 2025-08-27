@@ -10,5 +10,8 @@ namespace ExchangeRate.Application.Settings
     {
         string URLAwesomeAPI { get; }
         string ConnectionString { get; }
+        string JwtSecretKey { get; }
+        string JwtIssuer { get; }
+        string JwtAudience { get; }
     }
 }
