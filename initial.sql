@@ -15,5 +15,5 @@ CREATE TABLE Currency (
     ask NUMERIC(18,6) NOT NULL,
     DateOfCurrency DATE NOT NULL,
     CreatedAT TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT unique_currency_per_day UNIQUE (DateOfCurrency, code, codein)
+    CONSTRAINT unique_currency_date UNIQUE (DateOfCurrency)
 );
