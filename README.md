@@ -36,7 +36,8 @@ Antes de executar o projeto, certifique-se de ter instalado:
 - ✅ Um IDE compatível com .NET (recomendado: **Visual Studio 2022** ou **Visual Studio Code**)
 - ✅ **PostgreSQL** (ou outro banco compatível com Dapper)
 - ✅ [PostgreSQL Client](https://www.pgadmin.org/) (opcional, para visualização do banco)
-
+- ✅ Criar as tabelas no banco de dados: [tabelas](https://github.com/devgferreira/ExchangeRate-API/blob/dev/initial.sql)
+- ✅ Rodar o Worker para gerar uma base de dados mais solída.
 ---
 
 ## 🚀 Como Rodar o Projeto
