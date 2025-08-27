@@ -36,9 +36,23 @@ namespace ExchangeRate.Infra.Data.Repository.User
      
         }
 
-        public Task<List<UserInfo>> SelectUser(UserRequest request)
+        public async Task<List<UserInfo>> SelectUser(UserRequest request)
         {
-            throw new NotImplementedException();
+            var sql = "SELECT id, name, email, passwordHash, passwordSalt, role, createdAt FROM Users WHERE 1 = 1 ";
+            if (!string.IsNullOrEmpty(request.Email))
+            {
+                sql += " AND UPPER(email) = UPPER(@Email)";
+            }
+            if (request.Id != null)
+            {
+                sql += " AND id = @Id";
+            }
+            var result = await _dbContext.Connection.QueryAsync<UserInfo>(sql, new
+            {
+                request.Email,
+                request.Id
+            });
+            return result.ToList();
         }
     }
 }
