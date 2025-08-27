@@ -43,7 +43,7 @@ Antes de executar o projeto, certifique-se de ter instalado:
 
 ### 1. Clonar o repositório
 
-git clone https://github.com/seu-usuario/ExchangeRate.API.git
+git clone [https://github.com/devgferreira/ExchangeRate.API.git](https://github.com/devgferreira/ExchangeRate-API)
 
 ### 2. Configurar as variáveis de ambiente
 
