@@ -1,10 +1,12 @@
 ﻿using ExchangeRate.Application.Interface.AwesomeAPI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExchangeRate.API.Controllers.AwesomeAPI
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AwesomeAPIController : Controller
     {
         private readonly IAwesomeAPIService _awesomeAPIService;

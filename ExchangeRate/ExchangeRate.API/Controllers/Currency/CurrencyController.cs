@@ -1,13 +1,14 @@
 ﻿using ExchangeRate.Application.DTO.Currency.Request;
 using ExchangeRate.Application.Interface.Currency;
 using ExchangeRate.Domain.Entity.Currency.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExchangeRate.API.Controllers.Currency
 {
     [ApiController]
     [Route("api/[controller]")]
-
+    [Authorize]
     public class CurrencyController : Controller
     {
         private readonly ICurrencyService _currencyService;
