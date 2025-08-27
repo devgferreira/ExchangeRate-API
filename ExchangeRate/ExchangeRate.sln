@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRate.Infra.IoC", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRate.Worker.CurrencyUSD", "ExchangeRate.Worker.CurrencyRates\ExchangeRate.Worker.CurrencyUSD.csproj", "{E02DCACD-EA25-4679-828D-0714846B0EE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRate.Test", "ExchangeRate.Test\ExchangeRate.Test.csproj", "{02FEF5D6-5DEF-4B2C-A7F7-8DBE704D2453}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{E02DCACD-EA25-4679-828D-0714846B0EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E02DCACD-EA25-4679-828D-0714846B0EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E02DCACD-EA25-4679-828D-0714846B0EE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02FEF5D6-5DEF-4B2C-A7F7-8DBE704D2453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02FEF5D6-5DEF-4B2C-A7F7-8DBE704D2453}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02FEF5D6-5DEF-4B2C-A7F7-8DBE704D2453}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02FEF5D6-5DEF-4B2C-A7F7-8DBE704D2453}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
