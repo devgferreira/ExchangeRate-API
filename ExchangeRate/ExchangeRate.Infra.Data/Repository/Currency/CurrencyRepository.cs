@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using ExchangeRate.Domain.Entity.Currency;
 using ExchangeRate.Domain.Entity.Currency.Request;
-using ExchangeRate.Domain.Interface;
+using ExchangeRate.Domain.Interface.Currency;
 using ExchangeRate.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
