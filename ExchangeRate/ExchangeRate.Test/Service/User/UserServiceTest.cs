@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExchangeRate.Test.Service
+namespace ExchangeRate_Test.Service.User
 {
     public class UserServiceTest
     {
