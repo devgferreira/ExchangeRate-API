@@ -11,5 +11,6 @@ namespace ExchangeRate.Domain.Interface.User
     public interface IUserRepository
     {
         Task CreateUser(UserInfo userInfo);
+        Task<List<UserInfo>> SelectUser(UserRequest request);
     }
 }
